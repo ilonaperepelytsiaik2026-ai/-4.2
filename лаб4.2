@@ -1,0 +1,71 @@
+#include <iostream>
+#include <iomanip>
+#include <cmath>
+
+using namespace std;
+
+// Прототипи функцій
+double computeA(double x);
+double computeB(double x);
+double computeY(double x);
+
+int main()
+{
+    double x, xp, xk, dx, y;
+
+    cout << "xp = "; cin >> xp;
+    cout << "xk = "; cin >> xk;
+    cout << "dx = "; cin >> dx;
+
+    cout << fixed;
+    cout << "-------------------------" << endl;
+    cout << "|" << setw(8) << "x" << " |"
+        << setw(10) << "y" << " |" << endl;
+    cout << "-------------------------" << endl;
+
+    x = xp;
+    while (x <= xk)
+    {
+        y = computeY(x);
+
+        cout << "|" << setw(8) << setprecision(2) << x
+            << " |" << setw(10) << setprecision(3) << y
+            << " |" << endl;
+
+        x += dx;
+    }
+
+    cout << "-------------------------" << endl;
+
+    return 0;
+}
+
+
+// Обчислення допоміжного значення A
+double computeA(double x)
+{
+    return 2 * fabs(5 - x);
+}
+
+// Обчислення допоміжного значення B відповідно до системних умов
+double computeB(double x)
+{
+    if (x <= -1)
+    {
+        return exp(fabs(2 + x));
+    }
+    else if (x >= 1)
+    {
+        return pow(cos(x), 2) / (1 + fabs(sin(x)));
+    }
+    else // -1 < x < 1
+    {
+        return pow(sin(1.0 / fabs(2 + x)), 2);
+    }
+}
+
+// Підсумкова функція y = A - B
+double computeY(double x)
+{
+    return computeA(x) - computeB(x);
+}
